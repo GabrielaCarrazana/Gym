@@ -1,40 +1,47 @@
-const express = require('express');
-const cors = require('cors');
-const nodemailer = require('nodemailer');
+// 🔥 Abrir modal
+function abrirModal() {
+  const modal = document.getElementById('modal');
+  modal.classList.remove('hidden');
+  modal.classList.add('flex');
+}
 
-const app = express();
+// ❌ Cerrar modal
+function cerrarModal() {
+  const modal = document.getElementById('modal');
+  modal.classList.add('hidden');
+}
 
-app.use(cors());
-app.use(express.json());
+// 🚀 Enviar formulario
+async function enviarFormulario(e) {
+  e.preventDefault();
 
-// endpoint del formulario
-app.post('/contacto', async (req, res) => {
-  const { nombre, email, mensaje } = req.body;
+  const inputs = e.target.elements;
+
+  const data = {
+    nombre: inputs[0].value,
+    email: inputs[1].value,
+    mensaje: inputs[2].value
+  };
 
   try {
-    const transporter = nodemailer.createTransport({
-      service: 'gmail',
-      auth: {
-        user: 'gabrielacarrazana96@gmail.com',
-        pass: 'mrvealpihlxrbocs'
-      }
+    const res = await fetch('https://TU-BACKEND.onrender.com/contacto', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(data)
     });
 
-    await transporter.sendMail({
-      from: email,
-      to: 'gabrielacarrazana96@gmail.com',
-      subject: 'Nuevo contacto desde web',
-      text: `Nombre: ${nombre}\nEmail: ${email}\nMensaje: ${mensaje}`
-    });
-
-    res.json({ ok: true });
+    if (res.ok) {
+      alert('Mensaje enviado 🚀');
+      cerrarModal();
+      e.target.reset();
+    } else {
+      alert('Error al enviar ❌');
+    }
 
   } catch (error) {
     console.error(error);
-    res.status(500).json({ ok: false });
+    alert('Error de conexión ⚠️');
   }
-});
-
-app.listen(3000, () => {
-  console.log('Servidor corriendo en http://localhost:3000');
-});
+}
