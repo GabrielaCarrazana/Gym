@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FitnessLand</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+</head>
+<script src="script.js"></script>
+
+<body class="bg-black text-white font-sans">
+
+  <!-- Navbar -->
+  <nav class="flex justify-between items-center p-6">
+    <h1 class="text-2xl font-bold">FitnessLand</h1>
+    <button onclick="abrirModal()" class="bg-red-600 px-4 py-2 rounded">Únete</button>
+  </nav>
+
+  <!-- Hero -->
+  <section class="h-screen flex flex-col justify-center items-center text-center">
+    <h2 class="text-5xl font-bold mb-4">TRANSFORMA TU CUERPO</h2>
+    <p class="mb-6 text-gray-300">Entrena como nunca antes</p>
+    <button onclick="abrirModal()" class="bg-red-600 px-6 py-3 rounded">Empieza hoy</button>
+  </section>
+
+  <!-- Servicios -->
+  <section class="p-10 text-center">
+    <h3 class="text-3xl font-bold mb-8">Servicios</h3>
+    <div class="grid md:grid-cols-3 gap-6">
+      <div class="bg-gray-900 p-6 rounded">CrossFit</div>
+      <div class="bg-gray-900 p-6 rounded">Entrenamiento Personal</div>
+      <div class="bg-gray-900 p-6 rounded">Clases Grupales</div>
+    </div>
+  </section>
+
+  <!-- Precios -->
+  <section id="precios" class="p-10 text-center">
+    <h3 class="text-3xl font-bold mb-8">Precios</h3>
+    <div class="grid md:grid-cols-3 gap-6">
+      <div class="bg-gray-900 p-6 rounded">
+        <h4 class="text-xl mb-2">Básico</h4>
+        <p>30€/mes</p>
+      </div>
+      <div class="bg-red-600 p-6 rounded">
+        <h4 class="text-xl mb-2">Pro</h4>
+        <p>50€/mes</p>
+      </div>
+      <div class="bg-gray-900 p-6 rounded">
+        <h4 class="text-xl mb-2">Premium</h4>
+        <p>70€/mes</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Modal contacto -->
+  <div id="modal" class="fixed inset-0 bg-black bg-opacity-70 hidden justify-center items-center">
+    <div class="bg-white text-black p-8 rounded w-96 relative">
+      
+      <button onclick="cerrarModal()" class="absolute top-2 right-3 text-xl">✕</button>
+
+      <h2 class="text-2xl font-bold mb-4">Contáctanos</h2>
+
+      <form onsubmit="enviarFormulario(event)" class="flex flex-col gap-4">
+        <input type="text" placeholder="Nombre" class="border p-2 rounded" required>
+        <input type="email" placeholder="Email" class="border p-2 rounded" required>
+        <textarea placeholder="Mensaje" class="border p-2 rounded" required></textarea>
+        <button class="bg-red-600 text-white p-2 rounded">Enviar</button>
+      </form>
+
+    </div>
+  </div>
+
+  <!-- Script -->
+  <script src="script.js"></script>
+
+</body>
+</html>
