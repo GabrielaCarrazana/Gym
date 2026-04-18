@@ -1,47 +1,44 @@
-// 🔥 Abrir modal
-function abrirModal() {
-  const modal = document.getElementById('modal');
-  modal.classList.remove('hidden');
-  modal.classList.add('flex');
-}
+const express = require('express');
+const cors = require('cors');
+const nodemailer = require('nodemailer');
 
-// ❌ Cerrar modal
-function cerrarModal() {
-  const modal = document.getElementById('modal');
-  modal.classList.add('hidden');
-}
+const app = express();
 
-// 🚀 Enviar formulario
-async function enviarFormulario(e) {
-  e.preventDefault();
+app.use(cors({
+  origin: '*'
+}));
 
-  const inputs = e.target.elements;
+app.use(express.json());
 
-  const data = {
-    nombre: inputs[0].value,
-    email: inputs[1].value,
-    mensaje: inputs[2].value
-  };
+app.post('/contacto', async (req, res) => {
+  const { nombre, email, mensaje } = req.body;
 
   try {
-    const res = await fetch('https://gym-back-8n0b.onrender.com/contacto', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(data)
+    const transporter = nodemailer.createTransport({
+      service: 'gmail',
+      auth: {
+        user: process.env.EMAIL,
+        pass: process.env.PASS
+      }
     });
 
-    if (res.ok) {
-      alert('Mensaje enviado 🚀');
-      cerrarModal();
-      e.target.reset();
-    } else {
-      alert('Error al enviar ❌');
-    }
+    await transporter.sendMail({
+      from: email,
+      to: process.env.EMAIL,
+      subject: 'Nuevo contacto desde web',
+      text: `Nombre: ${nombre}\nEmail: ${email}\nMensaje: ${mensaje}`
+    });
+
+    res.json({ ok: true });
 
   } catch (error) {
     console.error(error);
-    alert('Error de conexión ⚠️');
+    res.status(500).json({ ok: false });
   }
-}
+});
+
+const PORT = process.env.PORT || 3000;
+
+app.listen(PORT, () => {
+  console.log(`Servidor corriendo en puerto ${PORT}`);
+});
