@@ -24,7 +24,7 @@ async function enviarFormulario(e) {
   };
 
   try {
-    const res = await fetch('https://TU-BACKEND.onrender.com/contacto', {
+    const res = await fetch('https://gym-back-8n0b.onrender.com/contacto', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
